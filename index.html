@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="google-site-verification" content="HoWofmErOOKMSn8dHeXvBTb5cGoEBEB1rQ7Y3CrUYgY" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Online Timer &amp; Stopwatch — Free Countdown Timer with Alarm | OnlineTimerHub</title>
+<meta name="description" content="Free online timer and stopwatch from OnlineTimerHub. Set a countdown timer with an alarm sound, use quick presets for cooking, study and workouts, and run a precise stopwatch with laps. No download needed." />
+<link rel="canonical" href="https://onlinetimerhub.github.io/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="OnlineTimerHub" />
+<meta property="og:title" content="Online Timer &amp; Stopwatch — Free Countdown Timer with Alarm | OnlineTimerHub" />
+<meta property="og:description" content="Free online countdown timer with alarm and a precise stopwatch with laps. Perfect for cooking, studying, workouts and Pomodoro focus sessions." />
+<meta property="og:url" content="https://onlinetimerhub.github.io/" />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "OnlineTimerHub",
+  "url": "https://onlinetimerhub.github.io/",
+  "description": "Free online countdown timer with alarm and a precise stopwatch with lap times."
+}
+</script>
+<style>
+  :root{
+    --bg:#fff6ec;
+    --bg-soft:#ffeedd;
+    --surface:#fffdf9;
+    --ink:#2e1c10;
+    --ink-soft:#5c4633;
+    --muted:#7a5f47;
+    --accent:#d95d0f;
+    --accent-dark:#b34a08;
+    --accent-soft:#ffd9b3;
+    --line:#eccdb0;
+    --ring-bg:#f3ddc4;
+    --good:#2e7d32;
+    --header-bg:#fff1de;
+    --shadow:0 2px 10px rgba(150,80,20,.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#221409;
+      --bg-soft:#2d1b0c;
+      --surface:#2a1a0e;
+      --ink:#f7e8d8;
+      --ink-soft:#e3cbb2;
+      --muted:#c2a284;
+      --accent:#ff8f3d;
+      --accent-dark:#ffa55c;
+      --accent-soft:#4a2c12;
+      --line:#573d24;
+      --ring-bg:#3d2812;
+      --good:#8fd694;
+      --header-bg:#2d1b0c;
+      --shadow:0 2px 10px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:17px;line-height:1.65;
+  }
+  a{color:var(--accent-dark);text-decoration:underline;text-underline-offset:2px;}
+  a:hover{color:var(--accent);}
+  header{
+    background:var(--header-bg);border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:20;
+  }
+  .header-in{max-width:1060px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .brand{font-size:23px;font-weight:bold;color:var(--ink);text-decoration:none;letter-spacing:.2px;}
+  .brand span{color:var(--accent);}
+  nav.main-nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto;}
+  nav.main-nav a{
+    text-decoration:none;color:var(--ink-soft);font-size:15.5px;
+    padding:9px 11px;border-radius:6px;min-height:38px;display:inline-flex;align-items:center;
+  }
+  nav.main-nav a:hover,nav.main-nav a.active{background:var(--accent-soft);color:var(--ink);}
+  main{max-width:1060px;margin:0 auto;padding:8px 18px 40px;}
+  .page{display:none;}
+  .page.on{display:block;}
+  h1{font-size:36px;line-height:1.2;margin:26px 0 12px;}
+  h2{font-size:27px;line-height:1.3;margin:38px 0 10px;border-bottom:2px solid var(--accent-soft);padding-bottom:6px;}
+  h3{font-size:20px;margin:26px 0 8px;}
+  p{margin:0 0 14px;}
+  ul,ol{margin:0 0 14px;padding-left:26px;}
+  li{margin-bottom:6px;}
+  .lede{font-size:19px;color:var(--ink-soft);max-width:760px;}
+  .tools{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin:26px 0 6px;}
+  @media (max-width:820px){.tools{grid-template-columns:1fr;}}
+  .tool h2{margin-top:0;border:none;padding:0;font-size:24px;}
+  .tool-note{color:var(--muted);font-size:15px;}
+  .ring-wrap{position:relative;width:230px;height:230px;margin:16px auto;}
+  .ring-wrap svg{transform:rotate(-90deg);}
+  .ring-bg{stroke:var(--ring-bg);}
+  .ring-fg{stroke:var(--accent);transition:stroke-dashoffset .2s linear;}
+  .ring-time{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .big-time{font-size:44px;font-weight:bold;font-variant-numeric:tabular-nums;letter-spacing:1px;line-height:1.1;}
+  .ring-label{font-size:14px;color:var(--muted);}
+  .sw-time{font-size:52px;text-align:center;margin:18px 0 4px;}
+  .inputs{display:flex;gap:10px;justify-content:center;align-items:flex-end;margin:14px 0 6px;flex-wrap:wrap;}
+  .inputs label{font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px;text-align:center;}
+  .inputs input{
+    width:78px;padding:10px 6px;font-size:22px;text-align:center;font-family:inherit;
+    border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-height:48px;
+  }
+  .inputs .colon{font-size:24px;padding-bottom:8px;color:var(--muted);}
+  .btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0;}
+  button{
+    font-family:inherit;font-size:16.5px;cursor:pointer;border-radius:8px;
+    padding:11px 22px;min-height:46px;border:1.5px solid var(--accent);
+    background:var(--accent);color:#fff;font-weight:bold;
+  }
+  button:hover{background:var(--accent-dark);border-color:var(--accent-dark);}
+  button.ghost{background:transparent;color:var(--accent-dark);}
+  button.ghost:hover{background:var(--accent-soft);color:var(--ink);}
+  button:disabled{opacity:.45;cursor:default;}
+  .presets{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0 4px;}
+  .presets button{
+    background:var(--surface);color:var(--ink);border:1.5px solid var(--line);
+    padding:8px 14px;font-size:15px;font-weight:normal;min-height:40px;
+  }
+  .presets button:hover{background:var(--accent-soft);border-color:var(--accent);}
+  .laps{max-width:420px;margin:10px auto 0;text-align:left;}
+  .laps h3{text-align:center;}
+  .laps ol{font-variant-numeric:tabular-nums;}
+  .laps .lap-split{color:var(--muted);font-size:14.5px;}
+  .flash{animation:flashbg .5s ease-in-out 6 alternate;}
+  @keyframes flashbg{from{background:var(--bg);}to{background:var(--accent-soft);}}
+  @media (prefers-reduced-motion: reduce){.flash{animation:none;}}
+  .done-msg{text-align:center;font-weight:bold;color:var(--accent-dark);min-height:26px;font-size:18px;}
+  .article-list{list-style:none;padding:0;}
+  .article-list li{margin-bottom:22px;}
+  .article-list a{font-size:21px;font-weight:bold;}
+  .article-list p{color:var(--ink-soft);margin-top:4px;}
+  .meta-line{color:var(--muted);font-size:14.5px;}
+  .faq-q{font-weight:bold;margin-top:18px;}
+  footer{border-top:1px solid var(--line);background:var(--bg-soft);margin-top:30px;}
+  .footer-in{max-width:1060px;margin:0 auto;padding:26px 18px 34px;}
+  .footer-links{display:flex;gap:6px 18px;flex-wrap:wrap;margin-bottom:12px;}
+  .footer-links a{padding:8px 2px;min-height:36px;display:inline-flex;align-items:center;text-decoration:none;font-size:15.5px;}
+  .footer-links a:hover{text-decoration:underline;}
+  .fine{color:var(--muted);font-size:14px;}
+  .crumb{font-size:14.5px;color:var(--muted);margin:18px 0 0;}
+  .crumb a{color:var(--muted);}
+  .preset-note{text-align:center;color:var(--muted);font-size:14px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-in">
+    <a class="brand" href="#/">Online<span>Timer</span>Hub</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="#/" data-nav="home">Timer &amp; Stopwatch</a>
+      <a href="#/articles" data-nav="articles">Articles</a>
+      <a href="#/faq" data-nav="faq">FAQ</a>
+      <a href="#/about" data-nav="about">About</a>
+      <a href="#/contact" data-nav="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app">
+
+<!-- ============================ HOME ============================ -->
+<section class="page" id="page-home">
+  <h1>Free Online Timer &amp; Stopwatch</h1>
+  <p class="lede">Set a countdown timer with an alarm, or run a precise stopwatch with lap times — right in your browser, with nothing to install. OnlineTimerHub keeps time using your device clock, so the countdown stays accurate even if the tab slows down or you switch apps for a moment.</p>
+
+  <div class="tools">
+    <div class="tool" id="timer-tool">
+      <h2>Countdown Timer</h2>
+      <p class="tool-note">Enter hours, minutes and seconds, or tap a quick preset below. A clear beep sounds when the timer reaches zero.</p>
+      <div class="ring-wrap" aria-hidden="true">
+        <svg width="230" height="230" viewBox="0 0 230 230">
+          <circle class="ring-bg" cx="115" cy="115" r="102" fill="none" stroke-width="12"/>
+          <circle class="ring-fg" id="ringFg" cx="115" cy="115" r="102" fill="none" stroke-width="12" stroke-linecap="round" stroke-dasharray="640.9" stroke-dashoffset="0"/>
+        </svg>
+        <div class="ring-time">
+          <div class="big-time" id="timerDisplay">00:00:00</div>
+          <div class="ring-label" id="timerState">Ready</div>
+        </div>
+      </div>
+      <div class="inputs">
+        <label>Hours<input type="number" id="inH" min="0" max="99" value="0" inputmode="numeric" /></label>
+        <span class="colon">:</span>
+        <label>Minutes<input type="number" id="inM" min="0" max="59" value="5" inputmode="numeric" /></label>
+        <span class="colon">:</span>
+        <label>Seconds<input type="number" id="inS" min="0" max="59" value="0" inputmode="numeric" /></label>
+      </div>
+      <div class="presets" aria-label="Quick presets">
+        <button type="button" data-preset="60">1 min</button>
+        <button type="button" data-preset="300">5 min</button>
+        <button type="button" data-preset="600">10 min</button>
+        <button type="button" data-preset="900">15 min</button>
+        <button type="button" data-preset="1800">30 min</button>
+        <button type="button" data-preset="3600">60 min</button>
+      </div>
+      <p class="preset-note">Tap a preset, then press Start.</p>
+      <div class="btn-row">
+        <button type="button" id="timerStart">Start</button>
+        <button type="button" id="timerPause" class="ghost" disabled>Pause</button>
+        <button type="button" id="timerReset" class="ghost">Reset</button>
+      </div>
+      <p class="done-msg" id="timerDone" role="status"></p>
+    </div>
+
+    <div class="tool" id="stopwatch-tool">
+      <h2>Stopwatch</h2>
+      <p class="tool-note">A stopwatch with hundredths of a second and a lap list, so you can record split times for runs, swims, experiments or practice sessions.</p>
+      <div class="big-time sw-time" id="swDisplay">00:00.00</div>
+      <div class="btn-row">
+        <button type="button" id="swStart">Start</button>
+        <button type="button" id="swLap" class="ghost" disabled>Lap</button>
+        <button type="button" id="swReset" class="ghost">Reset</button>
+      </div>
+      <div class="laps" id="lapBox" hidden>
+        <h3>Lap times</h3>
+        <ol id="lapList"></ol>
+      </div>
+    </div>
+  </div>
+
+  <h2>Why use an online timer?</h2>
+  <p>A timer turns a vague intention — "I will study for a while" — into a clear, measurable block of time. When the end point is fixed in advance, it is easier to start, easier to stay focused, and much easier to stop and rest without guilt. That simple idea sits behind almost every good use of a countdown: a cook who sets a <a href="#/article/kitchen-timer-guide">kitchen timer</a> so the pasta never overcooks, a student who works in short focused bursts, or an athlete who rests exactly ninety seconds between sets. The tool on this page is deliberately simple: no accounts, no downloads, and no clutter between you and the start button.</p>
+  <p>Because the countdown is calculated from the real clock rather than by counting screen refreshes, it stays honest. If your laptop sleeps for a minute or the browser throttles a background tab, the timer still finishes at the moment you asked for. The stopwatch works the same way, measuring true elapsed time from the instant you pressed Start.</p>
+
+  <h2>Timers in the kitchen</h2>
+  <p>Cooking is where most people meet timers first, and it is still one of the best uses for one. Eggs, rice, bread dough, marinades and roasts all reward precision: two minutes too long and boiled eggs turn chalky; five minutes too short and the rice stays hard in the middle. A visible countdown also frees your attention — instead of hovering over the stove, you can chop, clean or set the table and let the alarm call you back. Our <a href="#/article/kitchen-timer-guide">kitchen timer guide</a> walks through reliable times for common foods and explains how to juggle several dishes that all need to finish together.</p>
+
+  <h2>Timers for studying and focused work</h2>
+  <p>Long, unbroken study sessions feel productive but usually are not: attention fades, and the last hour of a three-hour session often produces very little. Short timed blocks work better. The best-known method is the <a href="#/article/pomodoro-technique">Pomodoro Technique</a>, which alternates 25 minutes of focused work with 5-minute breaks. Other students prefer longer 50-minute blocks or a flexible approach where the timer counts up instead of down. Our guide to <a href="#/article/study-timer-methods">study timer methods</a> compares these approaches honestly, including who each one suits and where each one breaks down.</p>
+
+  <h2>Timers for workouts and training</h2>
+  <p>In training, a timer is not just a convenience — it is part of the programme. Rest periods decide how heavy the next set feels, interval sessions depend on exact work-to-rest ratios, and timed circuits like EMOM (every minute on the minute) are impossible to run by feel alone. The countdown above handles long rests and cooking-style timers, while the stopwatch with laps is ideal for intervals and split times. Read <a href="#/article/workout-timing">how to time your workouts</a> for practical rest-period guidelines for strength training, HIIT and endurance work.</p>
+
+  <h2>The Pomodoro Technique, briefly</h2>
+  <p>Francesco Cirillo developed the Pomodoro Technique in the late 1980s, naming it after the tomato-shaped kitchen timer he used as a student. The pattern is simple: choose one task, set the timer for 25 minutes, work on nothing else until it rings, then take a 5-minute break. After four rounds, take a longer break of 15 to 30 minutes. The 25-minute preset is not one of the quick buttons above, but you can type it into the minutes box in seconds — or read the full explanation in our article on <a href="#/article/pomodoro-technique">the Pomodoro Technique</a>, including how to adapt the session length when 25 minutes does not fit your work.</p>
+
+  <h2>Everyday uses you might not expect</h2>
+  <p>Beyond the kitchen, desk and gym, timers quietly run a large part of daily life. Parents use them for screen-time limits and tidy-up races. Board-game players use them to keep turns moving. Gardeners time watering and seed soaking. Teachers run timed quizzes and classroom rotations. Presenters rehearse talks against the clock so they finish inside their slot. Even rest improves with a timer: a 20-minute nap with an alarm is refreshing, while an unplanned two-hour nap can wreck the evening. Whenever a task has a natural length, giving it a visible countdown makes it easier to begin and easier to finish.</p>
+
+  <h2>Questions people ask</h2>
+  <p><strong>Does the timer keep running if I switch tabs?</strong> Yes. The countdown is based on the real time it should end, so switching tabs, minimising the window or letting the screen dim does not change when it finishes. Keep the tab open and the sound on, and the alarm will play at zero.</p>
+  <p><strong>Is the stopwatch accurate?</strong> It measures elapsed time from your device clock and displays hundredths of a second, which is more than precise enough for training, cooking and classroom use.</p>
+  <p><strong>Do I need to install anything or sign up?</strong> No. Everything on this page runs in your browser. For more answers, see the full <a href="#/faq">FAQ page</a>, and for who runs this site, the <a href="#/about">About page</a>.</p>
+
+  <h2>Guides and articles</h2>
+  <p>We publish plain, practical guides about timing your work, training and cooking. Start with the <a href="#/article/pomodoro-technique">Pomodoro Technique explained</a>, then browse the full <a href="#/articles">articles index</a> for study methods, workout timing and kitchen timing guides. Each article is written to be useful on its own — no filler, no slideshows, just the method and how to apply it.</p>
+</section>
+
+<!-- ============================ ARTICLES INDEX ============================ -->
+<section class="page" id="page-articles">
+  <p class="crumb"><a href="#/">Home</a> › Articles</p>
+  <h1>Articles</h1>
+  <p class="lede">Practical, original guides on using time well — focus methods, training structure and kitchen timing.</p>
+  <ul class="article-list">
+    <li>
+      <a href="#/article/pomodoro-technique">The Pomodoro Technique, Explained Properly</a>
+      <p>How the 25-minute focus method actually works, why the breaks matter as much as the work, and how to adapt the session length to real tasks.</p>
+      <p class="meta-line">Focus &amp; productivity · about 6 minutes to read</p>
+    </li>
+    <li>
+      <a href="#/article/workout-timing">How to Time Your Workouts: Rest Periods, Intervals and Circuits</a>
+      <p>Rest periods are part of the programme, not a pause from it. Guidelines for strength training, hypertrophy, HIIT and EMOM sessions.</p>
+      <p class="meta-line">Fitness · about 6 minutes to read</p>
+    </li>
+    <li>
+      <a href="#/article/study-timer-methods">Study Timer Methods Compared: Pomodoro, 50/10, Flowtime and Counting Up</a>
+      <p>Four ways to time your study sessions, compared honestly — who each suits, where each fails, and how to pick one and stick with it.</p>
+      <p class="meta-line">Study skills · about 6 minutes to read</p>
+    </li>
+    <li>
+      <a href="#/article/kitchen-timer-guide">The Kitchen Timer Guide: Reliable Times for Everyday Cooking</a>
+      <p>Eggs, rice, pasta, roasts and more — the timings that matter, plus how to coordinate several dishes so everything finishes together.</p>
+      <p class="meta-line">Cooking · about 6 minutes to read</p>
+    </li>
+  </ul>
+</section>
+
+<!-- ============================ ARTICLE: POMODORO ============================ -->
+<section class="page" id="page-article-pomodoro-technique">
+  <p class="crumb"><a href="#/">Home</a> › <a href="#/articles">Articles</a> › The Pomodoro Technique</p>
+  <h1>The Pomodoro Technique, Explained Properly</h1>
+  <p class="meta-line">Focus &amp; productivity</p>
+  <p>The Pomodoro Technique is a way of working in short, timed bursts separated by deliberate breaks. It was developed in the late 1980s by Francesco Cirillo, an Italian university student who was struggling to concentrate on his studies. His tool was a tomato-shaped kitchen timer — <em>pomodoro</em> is Italian for tomato — and the method he built around it has since been used by students, programmers, writers and teams all over the world. Its appeal is that it asks for almost nothing: a timer, a task, and the willingness to protect twenty-five minutes at a time.</p>
+  <h2>The basic pattern</h2>
+  <p>The classic version runs like this. First, choose one specific task — not "work on the essay" but "draft the introduction of the essay". Second, set a timer for 25 minutes. Third, work on that task and nothing else until the timer rings; if a distracting thought appears, write it down on a piece of paper and return to the task. Fourth, when the timer rings, stop and take a 5-minute break away from your desk. Fifth, repeat. After four work sessions — four "pomodoros" — take a longer break of 15 to 30 minutes before starting the next set.</p>
+  <p>You can run the whole pattern with the <a href="#/">countdown timer on our homepage</a>: set 25 minutes for work, then 5 minutes for the break. The audible alarm matters more than it might seem — it removes the need to watch the clock, which is itself a distraction.</p>
+  <h2>Why it works</h2>
+  <p>Three mechanisms do most of the work. The first is the low cost of starting: almost anyone can face twenty-five minutes of a dreaded task, whereas "finish the report" can stall a whole morning. The second is the deadline effect — a ticking timer creates gentle urgency that keeps attention on the page. The third, and most underrated, is the break. Concentration is a depleting resource, and a real break — walking, stretching, looking out of a window, not scrolling a feed — restores it. People who skip the breaks usually find the method "stops working" by mid-afternoon; in fact it is they who stopped working the method.</p>
+  <h2>Adapting the session length</h2>
+  <p>Twenty-five minutes is a starting point, not a law. Tasks that need deep immersion — complex writing, design, debugging — often suit 40- or 50-minute sessions, because the first ten minutes are spent loading the problem into your head. Small, fragmented tasks (email, admin, marking) may suit 15-minute sprints. A sensible approach is to keep the classic 25/5 pattern for a week, notice where it chafes, and adjust one variable at a time. What you should not change is the principle behind it: single task, visible timer, genuine break. If you are comparing approaches, our guide to <a href="#/article/study-timer-methods">study timer methods</a> sets Pomodoro alongside the 50/10 method and Flowtime.</p>
+  <h2>Common mistakes</h2>
+  <p>The most common mistake is letting the timer become a suggestion — checking messages "just quickly" during a session, or finishing "one more thing" after it rings. The method depends on the boundary being real in both directions: you stop when it rings, and in exchange you truly rest during the break. A second mistake is choosing tasks that are too big. A pomodoro should contain a task you can plausibly finish or meaningfully advance in twenty-five minutes; "write thesis" needs breaking down first. A third is tracking nothing. Simply counting completed pomodoros each day gives you an honest picture of your focused hours — most people discover they do far fewer than they imagined, and that knowledge alone improves planning.</p>
+  <h2>Getting started today</h2>
+  <p>Pick your hardest small task, open the <a href="#/">timer</a>, set twenty-five minutes, and begin. Do four rounds with real breaks. That is the whole technique; everything else is refinement. If timed structure also appeals to you in training, the same discipline of fixed work and rest periods is covered in our article on <a href="#/article/workout-timing">how to time your workouts</a>.</p>
+</section>
+
+<!-- ============================ ARTICLE: WORKOUT ============================ -->
+<section class="page" id="page-article-workout-timing">
+  <p class="crumb"><a href="#/">Home</a> › <a href="#/articles">Articles</a> › How to Time Your Workouts</p>
+  <h1>How to Time Your Workouts: Rest Periods, Intervals and Circuits</h1>
+  <p class="meta-line">Fitness</p>
+  <p>Most people time only the work in a workout — the sets, the reps, the run — and let the rest happen by feel. That is a mistake. Rest periods are a training variable just like weight or distance: they decide how recovered you are for the next effort, which decides how much quality work you can do. A timer turns rest from a guess into part of the programme, and it also stops a 45-minute session quietly becoming a 90-minute one.</p>
+  <h2>Rest periods for strength training</h2>
+  <p>For heavy compound lifts — squats, deadlifts, presses, rows — worked at high effort, rest two to five minutes between sets. Your breathing and heart rate should settle and the nervous system needs that time to reproduce a near-maximal effort; cutting it short mostly cuts the weight you can lift. For moderate accessory work in the 8–15 rep range, 60 to 90 seconds is a good default. For small isolation exercises, 30 to 60 seconds is plenty. The honest test is performance: if your reps fall off a cliff from set to set, you are resting too little for the goal; if you are cold and scrolling by the next set, you are resting too much. Set the <a href="#/">countdown timer</a> when you rack the bar, and start the next set when it beeps — not when you feel like it.</p>
+  <h2>Intervals: work and rest on the clock</h2>
+  <p>Interval training alternates hard efforts with recovery, and the ratio defines the session. Beginners often start with 1:2 — for example, 30 seconds fast and 60 seconds easy — while fitter athletes use 1:1 or even 2:1. Tabata, the famous protocol, is 20 seconds of maximal effort with 10 seconds of rest, repeated eight times: four minutes that feel considerably longer. For intervals, the <a href="#/">stopwatch with lap times</a> is the right tool — press Lap at each change and you get a record of every split afterwards, which makes it easy to see whether your efforts stayed even or faded.</p>
+  <h2>EMOM and timed circuits</h2>
+  <p>EMOM means "every minute on the minute": at the start of each minute you perform a set task — say, ten kettlebell swings — and rest for whatever remains of that minute. It is self-regulating: as you tire, the work takes longer and the rest shrinks. Set a countdown for the total session length (10, 15 or 20 minutes is typical) and use a simple repeating minute in your head, or run rounds with the stopwatch's lap button. Timed circuits work similarly: stations of 40 seconds on and 20 seconds off build conditioning with very little equipment, and a timer keeps the transitions honest.</p>
+  <h2>Timing endurance work</h2>
+  <p>For steady running, cycling or swimming, timing matters in a different way: pacing. Lap splits reveal the classic beginner error of starting too fast. Take a split every kilometre or every five minutes and aim for even or slightly negative splits — the second half as fast as or faster than the first. For tempo and threshold sessions, a plain countdown for the work block (for example, 20 minutes at comfortably hard effort) keeps you from checking your watch every thirty seconds.</p>
+  <h2>A simple rule to start with</h2>
+  <p>If you remember nothing else: decide the rest before the session, set the timer, and obey it. Structure beats intensity for most people most of the time, because structure is what makes training repeatable week after week. The same principle — fixed blocks, honest breaks — powers focused desk work too, which is why we explain it for studying in our <a href="#/article/pomodoro-technique">Pomodoro Technique article</a>.</p>
+</section>
+
+<!-- ============================ ARTICLE: STUDY ============================ -->
+<section class="page" id="page-article-study-timer-methods">
+  <p class="crumb"><a href="#/">Home</a> › <a href="#/articles">Articles</a> › Study Timer Methods Compared</p>
+  <h1>Study Timer Methods Compared: Pomodoro, 50/10, Flowtime and Counting Up</h1>
+  <p class="meta-line">Study skills</p>
+  <p>Timing your study sessions is one of the few study habits with consistent support from both research and ordinary experience: defined sessions beat open-ended ones, and planned breaks beat collapsing at random. But there is more than one way to put a clock on your desk. This article compares four methods honestly — what each involves, who it suits, and where it tends to fail — so you can pick one and give it a fair trial.</p>
+  <h2>1. The Pomodoro Technique (25/5)</h2>
+  <p>Work 25 minutes, break 5 minutes, repeat four times, then take a longer break. Its strengths are the easy start and the frequent rests, which suit beginners, procrastinators and anyone facing dull-but-necessary material. Its weakness is interruption: some tasks punish stopping every 25 minutes, and some people find the ticking deadline stressful rather than focusing. We explain the method fully in our <a href="#/article/pomodoro-technique">Pomodoro Technique article</a>. Use the <a href="#/">countdown timer</a> with 25 minutes typed into the minutes box.</p>
+  <h2>2. The 50/10 method</h2>
+  <p>Fifty minutes of work followed by a ten-minute break, modelled loosely on a school or university period. The longer block suits reading, problem sets and writing, where the first minutes are spent getting into the material. The risk is the mirror image of Pomodoro's: fifty minutes is a bigger commitment, so starting feels harder, and if your attention genuinely fades at minute thirty, you will spend the last third of each block working badly. Many students settle here after a month or two of Pomodoro, once starting has become a habit.</p>
+  <h2>3. Flowtime</h2>
+  <p>Flowtime removes the fixed session length. You choose a task, note the time you start, and work until your focus naturally breaks; then you take a break whose length is proportional to how long you worked — roughly five minutes for up to 25 minutes of work, longer for longer sessions. It respects deep concentration instead of interrupting it, and it suits experienced workers on open-ended projects. Its failure mode is honesty: "my focus broke" can quietly become "I felt like stopping". The <a href="#/">stopwatch</a> is the natural tool here — start it when you sit down, and let the elapsed time, not a countdown, structure the session.</p>
+  <h2>4. Counting up with a target</h2>
+  <p>The simplest method of all: run the stopwatch whenever you study, stop it whenever you do not, and aim for a daily total — say, three honest hours. There are no sessions and no breaks prescribed; the timer is purely a measuring instrument. This suits people who dislike rigid structure but want the truth about how much they actually work, which is usually far less than they believe. The measurement alone changes behaviour: few people stop at 40 minutes when the display says 40 minutes and the target says three hours.</p>
+  <h2>How to choose</h2>
+  <p>Choose by your main problem. If your problem is <em>starting</em>, choose Pomodoro — twenty-five minutes is a small promise. If your problem is <em>being interrupted mid-thought</em>, choose 50/10 or Flowtime. If your problem is <em>not knowing where the day goes</em>, count up for a week and look at the numbers. Whichever you pick, keep two rules that all four methods share: one task at a time, and breaks that are actually breaks — stand up, move, look at something far away. A week of honest trial tells you more than a month of reading about methods, including this article.</p>
+</section>
+
+<!-- ============================ ARTICLE: KITCHEN ============================ -->
+<section class="page" id="page-article-kitchen-timer-guide">
+  <p class="crumb"><a href="#/">Home</a> › <a href="#/articles">Articles</a> › The Kitchen Timer Guide</p>
+  <h1>The Kitchen Timer Guide: Reliable Times for Everyday Cooking</h1>
+  <p class="meta-line">Cooking</p>
+  <p>A kitchen timer is the cheapest cooking skill there is. Most home-cooking disappointments are not seasoning problems or technique problems — they are timing problems: eggs boiled two minutes too long, rice lifted too early, a roast rested too briefly. This guide collects the timings that matter most in everyday cooking and, just as importantly, explains how to coordinate several of them at once. Set the <a href="#/">countdown timer</a> before you start each stage, and let the alarm do the remembering.</p>
+  <h2>Eggs</h2>
+  <p>For boiled eggs with the water already boiling, lower the eggs in and start the clock: 6 minutes gives a runny yolk, 7 to 8 minutes a soft, jammy yolk, 10 minutes a just-set yolk, and 12 minutes a fully hard-boiled egg. Move them to cold water the moment the timer rings — residual heat keeps cooking them in the shell. Poached eggs take 3 minutes in barely simmering water; fried eggs want about 2 minutes before a flip, or 3 to 4 minutes sunny-side up with a lid.</p>
+  <h2>Rice, pasta and grains</h2>
+  <p>White rice, cooked by absorption, needs 12 minutes of gentle simmering and then — this is the part people skip — 10 minutes of resting off the heat with the lid on. Brown rice needs about 40 minutes plus the same rest. Dried pasta varies by shape, but the packet time minus one minute is a reliable target for pasta that will finish in its sauce; start tasting a minute before the timer rings, because no printed time knows your stove. Couscous is the fastest of all: 5 minutes standing in boiling water, off the heat.</p>
+  <h2>Roasts and resting</h2>
+  <p>Large joints are judged by temperature, not time, but a timer still runs the show around them: it tells you when to start the vegetables so they land with the meat, and it times the rest. Resting is cooking's most underrated stage — a chicken should rest 10 to 15 minutes, a large beef joint 20 to 30 — during which the juices redistribute and the meat becomes noticeably juicier. Set the timer when the roast comes out of the oven, and do not carve before it rings, however good it smells.</p>
+  <h2>Baking</h2>
+  <p>Ovens lie and bakes vary, so treat printed times as the start of a window, not a deadline: set the timer for five minutes <em>before</em> the stated time and check then. A cake is done when a skewer comes out clean and the top springs back; bread when it sounds hollow underneath. And set a separate short timer for the things that burn while you are distracted — nuts toasting, garlic bread, the last two minutes of anything under a hot grill.</p>
+  <h2>Running several timers in one meal</h2>
+  <p>The real skill is coordination. Work backwards from the moment you want to serve: if the chicken rests at 6:45 and the roast potatoes take 50 minutes, they go in at 5:55; greens that take 4 minutes start at 6:41. Write the sequence down before you begin, and reset the countdown for each stage as you go — one clear timer, used in sequence, beats three forgotten ones. This backwards-planning habit is the same skill as scheduling focused work blocks, which we cover in our guide to <a href="#/article/study-timer-methods">study timer methods</a>.</p>
+  <h2>The one habit that matters</h2>
+  <p>Start the timer when the food goes in, not when you remember. Every timing in this guide assumes the clock starts at the moment of cooking. Make that automatic and most of your timing problems disappear — the <a href="#/">timer on our homepage</a> is two taps away, which is exactly where a kitchen tool should be.</p>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="page" id="page-faq">
+  <p class="crumb"><a href="#/">Home</a> › FAQ</p>
+  <h1>Frequently Asked Questions</h1>
+  <p class="faq-q">How do I set the countdown timer?</p>
+  <p>Type hours, minutes and seconds into the three boxes on the <a href="#/">homepage</a>, or tap one of the quick presets (1, 5, 10, 15, 30 or 60 minutes), then press Start. The ring shows how much of the time has elapsed, and a beep sounds at zero.</p>
+  <p class="faq-q">Does the timer keep running in a background tab?</p>
+  <p>Yes. The countdown is calculated from the real end time using your device clock, not by counting screen updates, so switching tabs, minimising the browser or letting the screen dim does not change when it finishes. Keep the tab open and your sound on so you hear the alarm.</p>
+  <p class="faq-q">Why is there no sound?</p>
+  <p>Browsers require a user action before playing audio, so make sure you pressed Start on the page (that interaction enables the sound). Also check that your device is not muted and the tab is not muted in your browser.</p>
+  <p class="faq-q">How accurate is the stopwatch?</p>
+  <p>The stopwatch measures elapsed time from your device clock and displays hundredths of a second. That is far more precise than needed for training, cooking, classroom and everyday use.</p>
+  <p class="faq-q">How do lap times work?</p>
+  <p>Press Lap while the stopwatch is running. Each lap is added to the list with its lap number, the time for that lap alone, and the total elapsed time at that point. Press Reset to clear the list.</p>
+  <p class="faq-q">What happens when I pause the timer?</p>
+  <p>Pausing freezes the remaining time. When you press Start again, the countdown resumes from exactly where it stopped — the end time is recalculated from the remaining time, so no seconds are lost or gained.</p>
+  <p class="faq-q">Can I run the timer and stopwatch at the same time?</p>
+  <p>Yes. They are independent tools and can run side by side — for example, a countdown for the oven while the stopwatch times your intervals.</p>
+  <p class="faq-q">Do I need an account or an app?</p>
+  <p>No. OnlineTimerHub runs entirely in your browser. There is nothing to install, no sign-up, and no data about your timers is sent anywhere.</p>
+  <p class="faq-q">Where can I learn timing methods, not just tools?</p>
+  <p>Our <a href="#/articles">articles</a> cover the <a href="#/article/pomodoro-technique">Pomodoro Technique</a>, <a href="#/article/study-timer-methods">study timer methods</a>, <a href="#/article/workout-timing">workout timing</a> and <a href="#/article/kitchen-timer-guide">kitchen timing</a> in practical detail.</p>
+</section>
+
+<!-- ============================ ABOUT ============================ -->
+<section class="page" id="page-about">
+  <p class="crumb"><a href="#/">Home</a> › About</p>
+  <h1>About OnlineTimerHub</h1>
+  <p>OnlineTimerHub is a small, free website built around one idea: time is easier to use well when you can see it. The site offers two tools — a countdown timer with an alarm and quick presets, and a stopwatch with lap times — together with a growing library of plain-language guides about timing your work, study, training and cooking.</p>
+  <p>Everything here runs in your browser. There are no accounts, no downloads and no tracking of what you time. The tools are built to be accurate in the way that matters: they calculate from your device clock, so a countdown ends when it should even if the tab was in the background.</p>
+  <p>The guides are written to be read once and used immediately. If you are new here, start with the <a href="#/article/pomodoro-technique">Pomodoro Technique</a> for focused work, or the <a href="#/article/kitchen-timer-guide">kitchen timer guide</a> if dinner is the priority. Questions and suggestions are welcome via the <a href="#/contact">contact page</a>.</p>
+</section>
+
+<!-- ============================ CONTACT ============================ -->
+<section class="page" id="page-contact">
+  <p class="crumb"><a href="#/">Home</a> › Contact</p>
+  <h1>Contact</h1>
+  <p>The fastest way to reach us is by email:</p>
+  <p><strong><a href="mailto:contact@onlinetimerhub.github.io">contact@onlinetimerhub.github.io</a></strong></p>
+  <p>We read messages about timer bugs, article corrections and guide requests. If you are reporting a problem with the timer or stopwatch, it helps to mention your device and browser, and what you pressed before the problem appeared. Please do not send personal information beyond what your message needs.</p>
+  <p>For questions about how the site handles data, see the <a href="#/privacy">Privacy Policy</a>.</p>
+</section>
+
+<!-- ============================ PRIVACY ============================ -->
+<section class="page" id="page-privacy">
+  <p class="crumb"><a href="#/">Home</a> › Privacy Policy</p>
+  <h1>Privacy Policy</h1>
+  <p class="meta-line">Last updated: 2026</p>
+  <p>OnlineTimerHub is designed to work without collecting your personal information. The timer and stopwatch run entirely in your browser on your own device. We do not ask you to create an account, and we do not receive, store or transmit the times you set, your lap times, or anything else you do with the tools.</p>
+  <h2>Information we do not collect</h2>
+  <p>We do not collect names, email addresses (unless you choose to email us), usage histories of the tools, or device identifiers through the tools themselves. Nothing about a timing session leaves your browser.</p>
+  <h2>Cookies</h2>
+  <p>The tools on this site do not require cookies to function. If third-party services are ever embedded in the future, this policy will be updated to describe them before they are used.</p>
+  <h2>Email</h2>
+  <p>If you contact us by email, we receive the address and contents of your message and use them only to reply. We do not sell or share email addresses.</p>
+  <h2>Changes</h2>
+  <p>If this policy changes, the updated version will be posted on this page with a new date. Continued use of the site after a change means you accept the updated policy.</p>
+</section>
+
+<!-- ============================ TERMS ============================ -->
+<section class="page" id="page-terms">
+  <p class="crumb"><a href="#/">Home</a> › Terms of Use</p>
+  <h1>Terms of Use</h1>
+  <p class="meta-line">Last updated: 2026</p>
+  <p>By using OnlineTimerHub you agree to these terms. The site provides a free online countdown timer, a stopwatch, and informational articles about time management, study methods, exercise and cooking.</p>
+  <h2>Use of the tools</h2>
+  <p>The tools are provided for personal, everyday use. They are aids to timekeeping, not certified measuring instruments, and they must not be relied on where a timing error could affect safety, health, legal obligations or competition results. Always use appropriate certified equipment for medical, industrial or official purposes.</p>
+  <h2>Content</h2>
+  <p>Articles on this site are general information, not professional advice. Fitness and cooking guidance in particular should be adapted to your own circumstances, equipment and judgement.</p>
+  <h2>Availability</h2>
+  <p>We aim to keep the site available and working, but we do not guarantee uninterrupted service. The tools depend on your device and browser behaving correctly.</p>
+  <h2>Liability</h2>
+  <p>To the extent permitted by law, OnlineTimerHub is not liable for losses arising from reliance on the tools or articles. If any part of these terms is unenforceable, the remaining parts continue to apply.</p>
+</section>
+
+<!-- ============================ DISCLAIMER ============================ -->
+<section class="page" id="page-disclaimer">
+  <p class="crumb"><a href="#/">Home</a> › Disclaimer</p>
+  <h1>Disclaimer</h1>
+  <p>The information and tools on OnlineTimerHub are provided "as is" for general, everyday use. While we work to keep the tools accurate and the articles correct, we make no warranties about completeness, reliability or fitness for a particular purpose.</p>
+  <p>The timer and stopwatch are convenience tools. They are not medical devices, safety equipment or certified competition instruments, and they should never be the only safeguard in any situation where timing affects safety — for example, cooking for people with serious allergies, timing medication, or supervising children around water or heat. Use your judgement and appropriate equipment.</p>
+  <p>Article content about exercise and nutrition is general educational information and is not a substitute for advice from a qualified professional who knows your situation.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-in">
+    <div class="footer-links">
+      <a href="#/">Timer &amp; Stopwatch</a>
+      <a href="#/articles">Articles</a>
+      <a href="#/faq">FAQ</a>
+      <a href="#/about">About</a>
+      <a href="#/contact">Contact</a>
+      <a href="#/privacy">Privacy Policy</a>
+      <a href="#/terms">Terms of Use</a>
+      <a href="#/disclaimer">Disclaimer</a>
+    </div>
+    <p class="fine">© 2026 OnlineTimerHub. Free online timer and stopwatch — no downloads, no sign-up.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Routing ---------- */
+  var routes = {
+    "": "home", "/": "home",
+    "/articles": "articles",
+    "/faq": "faq",
+    "/about": "about",
+    "/contact": "contact",
+    "/privacy": "privacy",
+    "/terms": "terms",
+    "/disclaimer": "disclaimer",
+    "/article/pomodoro-technique": "article-pomodoro-technique",
+    "/article/workout-timing": "article-workout-timing",
+    "/article/study-timer-methods": "article-study-timer-methods",
+    "/article/kitchen-timer-guide": "article-kitchen-timer-guide"
+  };
+  var titles = {
+    "home": "Online Timer & Stopwatch — Free Countdown Timer with Alarm | OnlineTimerHub",
+    "articles": "Articles | OnlineTimerHub",
+    "faq": "FAQ | OnlineTimerHub",
+    "about": "About | OnlineTimerHub",
+    "contact": "Contact | OnlineTimerHub",
+    "privacy": "Privacy Policy | OnlineTimerHub",
+    "terms": "Terms of Use | OnlineTimerHub",
+    "disclaimer": "Disclaimer | OnlineTimerHub",
+    "article-pomodoro-technique": "The Pomodoro Technique, Explained Properly | OnlineTimerHub",
+    "article-workout-timing": "How to Time Your Workouts | OnlineTimerHub",
+    "article-study-timer-methods": "Study Timer Methods Compared | OnlineTimerHub",
+    "article-kitchen-timer-guide": "The Kitchen Timer Guide | OnlineTimerHub"
+  };
+  function route(){
+    var hash = location.hash.replace(/^#/, "");
+    var key = routes.hasOwnProperty(hash) ? hash : "/";
+    var pageId = routes[key];
+    var pages = document.querySelectorAll(".page");
+    for (var i = 0; i < pages.length; i++) pages[i].classList.remove("on");
+    var el = document.getElementById("page-" + pageId);
+    if (el) el.classList.add("on");
+    document.title = titles[pageId] || titles.home;
+    var navKey = pageId.indexOf("article-") === 0 ? "articles" : pageId;
+    var links = document.querySelectorAll("[data-nav]");
+    for (var j = 0; j < links.length; j++) {
+      links[j].classList.toggle("active", links[j].getAttribute("data-nav") === navKey);
+    }
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", route);
+
+  /* ---------- Helpers ---------- */
+  function pad(n, w){ n = String(n); while (n.length < (w || 2)) n = "0" + n; return n; }
+  function fmtHMS(ms){
+    if (ms < 0) ms = 0;
+    var totalSec = Math.ceil(ms / 1000);
+    var h = Math.floor(totalSec / 3600);
+    var m = Math.floor((totalSec % 3600) / 60);
+    var s = totalSec % 60;
+    return pad(h) + ":" + pad(m) + ":" + pad(s);
+  }
+  function fmtSW(ms){
+    if (ms < 0) ms = 0;
+    var cs = Math.floor((ms % 1000) / 10);
+    var totalSec = Math.floor(ms / 1000);
+    var s = totalSec % 60;
+    var m = Math.floor(totalSec / 60) % 60;
+    var h = Math.floor(totalSec / 3600);
+    if (h > 0) return pad(h) + ":" + pad(m) + ":" + pad(s) + "." + pad(cs);
+    return pad(m) + ":" + pad(s) + "." + pad(cs);
+  }
+
+  /* ---------- Audio (WebAudio beep) ---------- */
+  var audioCtx = null;
+  function ensureAudio(){
+    if (!audioCtx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) audioCtx = new AC();
+    }
+    if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+  }
+  function beep(){
+    ensureAudio();
+    if (!audioCtx) return;
+    var t0 = audioCtx.currentTime;
+    for (var i = 0; i < 3; i++) {
+      var osc = audioCtx.createOscillator();
+      var gain = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = 880;
+      var start = t0 + i * 0.45;
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.35, start + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.35);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(start); osc.stop(start + 0.4);
+    }
+  }
+
+  /* ---------- Countdown Timer ---------- */
+  var CIRC = 640.9;
+  var ringFg = document.getElementById("ringFg");
+  var tDisplay = document.getElementById("timerDisplay");
+  var tState = document.getElementById("timerState");
+  var tDone = document.getElementById("timerDone");
+  var inH = document.getElementById("inH"), inM = document.getElementById("inM"), inS = document.getElementById("inS");
+  var btnStart = document.getElementById("timerStart");
+  var btnPause = document.getElementById("timerPause");
+  var btnReset = document.getElementById("timerReset");
+
+  var tTotal = 0;        // total duration ms
+  var tRemaining = 0;    // remaining ms when paused / set
+  var tEndAt = 0;        // Date.now() timestamp when it should finish
+  var tRunning = false;
+  var tRaf = null;
+
+  function readInputs(){
+    var h = Math.max(0, Math.min(99, parseInt(inH.value, 10) || 0));
+    var m = Math.max(0, Math.min(59, parseInt(inM.value, 10) || 0));
+    var s = Math.max(0, Math.min(59, parseInt(inS.value, 10) || 0));
+    return ((h * 3600) + (m * 60) + s) * 1000;
+  }
+  function setInputsFromMs(ms){
+    var totalSec = Math.round(ms / 1000);
+    inH.value = Math.floor(totalSec / 3600);
+    inM.value = Math.floor((totalSec % 3600) / 60);
+    inS.value = totalSec % 60;
+  }
+  function drawTimer(remaining){
+    tDisplay.textContent = fmtHMS(remaining);
+    var frac = tTotal > 0 ? remaining / tTotal : 0;
+    if (frac < 0) frac = 0; if (frac > 1) frac = 1;
+    ringFg.style.strokeDashoffset = String(CIRC * (1 - frac));
+  }
+  function timerTick(){
+    var remaining = tEndAt - Date.now();
+    if (remaining <= 0) {
+      drawTimer(0);
+      finishTimer();
+      return;
+    }
+    drawTimer(remaining);
+    tRaf = requestAnimationFrame(timerTick);
+  }
+  function finishTimer(){
+    tRunning = false;
+    tRemaining = 0;
+    tState.textContent = "Time's up!";
+    tDone.textContent = "⏰ Time's up!";
+    btnStart.textContent = "Start";
+    btnPause.disabled = true;
+    beep();
+    document.body.classList.remove("flash");
+    void document.body.offsetWidth;
+    document.body.classList.add("flash");
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+  }
+  function startTimer(){
+    ensureAudio();
+    if (tRunning) { pauseTimer(); return; }
+    if (tRemaining <= 0) {
+      tTotal = readInputs();
+      tRemaining = tTotal;
+    }
+    if (tRemaining <= 0) {
+      tDone.textContent = "Set a time above first — hours, minutes or seconds.";
+      return;
+    }
+    tDone.textContent = "";
+    document.body.classList.remove("flash");
+    tEndAt = Date.now() + tRemaining;
+    tRunning = true;
+    tState.textContent = "Running";
+    btnStart.textContent = "Pause";
+    btnPause.disabled = false;
+    if (tRaf) cancelAnimationFrame(tRaf);
+    tRaf = requestAnimationFrame(timerTick);
+  }
+  function pauseTimer(){
+    if (!tRunning) return;
+    tRemaining = Math.max(0, tEndAt - Date.now());
+    tRunning = false;
+    if (tRaf) cancelAnimationFrame(tRaf);
+    drawTimer(tRemaining);
+    tState.textContent = "Paused";
+    btnStart.textContent = "Resume";
+    btnPause.disabled = true;
+  }
+  function resetTimer(){
+    tRunning = false;
+    if (tRaf) cancelAnimationFrame(tRaf);
+    tTotal = readInputs();
+    tRemaining = tTotal;
+    drawTimer(tRemaining);
+    tState.textContent = "Ready";
+    tDone.textContent = "";
+    btnStart.textContent = "Start";
+    btnPause.disabled = true;
+    document.body.classList.remove("flash");
+  }
+  function inputsChanged(){
+    if (tRunning) return;
+    tTotal = readInputs();
+    tRemaining = tTotal;
+    drawTimer(tRemaining);
+    tState.textContent = "Ready";
+    tDone.textContent = "";
+    btnStart.textContent = "Start";
+  }
+  btnStart.addEventListener("click", startTimer);
+  btnPause.addEventListener("click", pauseTimer);
+  btnReset.addEventListener("click", resetTimer);
+  [inH, inM, inS].forEach(function(el){
+    el.addEventListener("input", inputsChanged);
+    el.addEventListener("change", inputsChanged);
+  });
+  var presetBtns = document.querySelectorAll("[data-preset]");
+  for (var p = 0; p < presetBtns.length; p++) {
+    presetBtns[p].addEventListener("click", function(){
+      var secs = parseInt(this.getAttribute("data-preset"), 10) || 0;
+      tRunning = false;
+      if (tRaf) cancelAnimationFrame(tRaf);
+      setInputsFromMs(secs * 1000);
+      tTotal = secs * 1000;
+      tRemaining = tTotal;
+      drawTimer(tRemaining);
+      tState.textContent = "Ready — press Start";
+      tDone.textContent = "";
+      btnStart.textContent = "Start";
+      btnPause.disabled = true;
+      ensureAudio();
+    });
+  }
+  drawTimer(readInputs());
+
+  /* ---------- Stopwatch ---------- */
+  var swDisplay = document.getElementById("swDisplay");
+  var swStart = document.getElementById("swStart");
+  var swLapBtn = document.getElementById("swLap");
+  var swResetBtn = document.getElementById("swReset");
+  var lapBox = document.getElementById("lapBox");
+  var lapList = document.getElementById("lapList");
+
+  var swRunning = false;
+  var swStartAt = 0;      // Date.now() when current run segment started
+  var swElapsed = 0;      // accumulated ms from previous segments
+  var swLastLapTotal = 0; // total elapsed at previous lap
+  var swLapCount = 0;
+  var swRaf = null;
+
+  function swNow(){ return swElapsed + (swRunning ? (Date.now() - swStartAt) : 0); }
+  function swTick(){
+    swDisplay.textContent = fmtSW(swNow());
+    if (swRunning) swRaf = requestAnimationFrame(swTick);
+  }
+  swStart.addEventListener("click", function(){
+    ensureAudio();
+    if (swRunning) {
+      swElapsed = swNow();
+      swRunning = false;
+      if (swRaf) cancelAnimationFrame(swRaf);
+      swDisplay.textContent = fmtSW(swElapsed);
+      swStart.textContent = "Resume";
+      swLapBtn.disabled = true;
+    } else {
+      swStartAt = Date.now();
+      swRunning = true;
+      swStart.textContent = "Pause";
+      swLapBtn.disabled = false;
+      swRaf = requestAnimationFrame(swTick);
+    }
+  });
+  swLapBtn.addEventListener("click", function(){
+    if (!swRunning) return;
+    var total = swNow();
+    var split = total - swLastLapTotal;
+    swLastLapTotal = total;
+    swLapCount++;
+    var li = document.createElement("li");
+    li.innerHTML = "Lap " + swLapCount + " — " + fmtSW(total) +
+      ' <span class="lap-split">(lap time ' + fmtSW(split) + ")</span>";
+    lapList.insertBefore(li, lapList.firstChild);
+    lapBox.hidden = false;
+  });
+  swResetBtn.addEventListener("click", function(){
+    swRunning = false;
+    if (swRaf) cancelAnimationFrame(swRaf);
+    swElapsed = 0; swLastLapTotal = 0; swLapCount = 0;
+    swDisplay.textContent = fmtSW(0);
+    swStart.textContent = "Start";
+    swLapBtn.disabled = true;
+    lapList.innerHTML = "";
+    lapBox.hidden = true;
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>
